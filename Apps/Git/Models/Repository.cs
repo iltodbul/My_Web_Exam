@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Git.Models
@@ -24,6 +25,7 @@ namespace Git.Models
         [Required]
         public bool IsPublic { get; set; }
 
+        [ForeignKey("Owner")]
         public String OwnerId { get; set; }
 
         public virtual User Owner { get; set; }
