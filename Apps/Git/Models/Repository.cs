@@ -20,21 +20,16 @@ namespace Git.Models
         [MaxLength(10)]
         public string Name { get; set; }
 
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         [Required]
         public bool IsPublic { get; set; }
 
-        [ForeignKey("Owner")]
-        public String OwnerId { get; set; }
+        public string OwnerId { get; set; }
 
         public virtual User Owner { get; set; }
 
         public virtual ICollection<Commit> Commits { get; set; } = new HashSet<Commit>();
-        
-        /*
-    • Has a OwnerId – a string
-    • Has a Owner – a User object
-    • Has Commits collection – a Commit type*/
     }
 }

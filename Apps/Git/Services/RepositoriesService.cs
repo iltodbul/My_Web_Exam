@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Git.Data;
 using Git.Models;
 using Git.ViewModels.Repositories;
@@ -48,6 +47,15 @@ namespace Git.Services
                 .ToList();
 
             return problems;
+        }
+
+        public string GetNameById(string id)
+        {
+            var repoName = dbContext.Repositories
+                .Where(x=>x.Id == id)
+                .Select(x => x.Name)
+                .FirstOrDefault();
+            return repoName;
         }
     }
 }

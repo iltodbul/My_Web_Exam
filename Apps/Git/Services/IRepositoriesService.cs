@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Git.ViewModels.Repositories;
 
 namespace Git.Services
@@ -10,5 +8,7 @@ namespace Git.Services
         void Create(string name, string repositoryType, string userId);
 
         IEnumerable<AllRepositoryViewModel> GetAll();
+
+        string GetNameById(string id);
     }
 }

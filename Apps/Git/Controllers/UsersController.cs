@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using Git.Services;
 using Git.ViewModels.Users;
 using SUS.HTTP;
@@ -21,10 +18,10 @@ namespace Git.Controllers
         // GET /users/login
         public HttpResponse Login()
         {
-            //if (this.IsUserSignedIn())
-            //{
-            //    return this.Redirect("/");
-            //}
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
 
             return this.View();
         }
@@ -32,10 +29,10 @@ namespace Git.Controllers
         [HttpPost]
         public HttpResponse Login(string username, string password)
         {
-            //if (this.IsUserSignedIn())
-            //{
-            //    return this.Redirect("/");
-            //}
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
 
             var userId = this.usersService.GetUserId(username, password);
             if (userId == null)
@@ -61,6 +58,10 @@ namespace Git.Controllers
         [HttpPost]
         public HttpResponse Register(RegisterInputModel input)
         {
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
 
             if (string.IsNullOrEmpty(input.Username)
                 || input.Username.Length < 5

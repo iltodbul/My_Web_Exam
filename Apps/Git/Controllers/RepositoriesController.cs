@@ -16,12 +16,21 @@ namespace Git.Controllers
 
         public HttpResponse Create()
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
             return this.View();
         }
 
         [HttpPost]
         public HttpResponse Create(RepositoryCreateInputModel inputModel)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
+
             if (string.IsNullOrEmpty(inputModel.Name)
                 || inputModel.Name.Length < 3
                 || inputModel.Name.Length > 10)

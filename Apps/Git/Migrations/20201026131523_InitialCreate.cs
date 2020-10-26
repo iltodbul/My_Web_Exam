@@ -47,7 +47,7 @@ namespace Git.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     CreatorId = table.Column<string>(nullable: true),
                     RepositoryId = table.Column<string>(nullable: true)
