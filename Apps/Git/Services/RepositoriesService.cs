@@ -36,7 +36,7 @@ namespace Git.Services
         public IEnumerable<AllRepositoryViewModel> GetAll()
         {
             var problems = this.dbContext.Repositories
-                .Where(x=>x.IsPublic == true)
+                .Where(x=>x.IsPublic)
                 .Select(x => new AllRepositoryViewModel()
                 {
                     Id = x.Id,

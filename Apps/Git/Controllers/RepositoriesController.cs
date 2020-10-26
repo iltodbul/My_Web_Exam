@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Git.Services;
+﻿using Git.Services;
 using Git.ViewModels.Repositories;
 using SUS.HTTP;
 using SUS.MvcFramework;
@@ -25,7 +22,13 @@ namespace Git.Controllers
         [HttpPost]
         public HttpResponse Create(RepositoryCreateInputModel inputModel)
         {
-            //TODO check
+            if (string.IsNullOrEmpty(inputModel.Name)
+                || inputModel.Name.Length < 3
+                || inputModel.Name.Length > 10)
+            {
+                return this.Error("Invalid name. The name should be between 3 and 10 characters.");
+            }
+
             var userId = this.GetUserId();
             this.repositoriesService.Create(inputModel.Name, inputModel.RepositoryType, userId);
 
@@ -34,9 +37,9 @@ namespace Git.Controllers
 
         public HttpResponse All()
         {
-            var repositories = repositoriesService.GetAll();
+            var model = repositoriesService.GetAll();
 
-            return this.View();
+            return this.View(model);
         }
     }
 }
