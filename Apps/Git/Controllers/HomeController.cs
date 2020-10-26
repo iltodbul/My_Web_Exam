@@ -6,16 +6,6 @@
     public class HomeController : Controller
     {
         [HttpGet("/")]
-        public HttpResponse SlashIndex()
-        {
-            if (this.IsUserSignedIn())
-            {
-                return this.Redirect("/Repositories/All");
-            }
-
-            return this.Redirect("/Home/Index");
-        }
-
         public HttpResponse Index()
         {
             if (this.IsUserSignedIn())

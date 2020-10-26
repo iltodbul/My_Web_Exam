@@ -19,15 +19,28 @@ namespace Git.Controllers
             this.repositoriesService = repositoriesService;
         }
 
-        public HttpResponse Create(string repoId)
+        [HttpGet]
+        public HttpResponse All()
         {
             if (!this.IsUserSignedIn())
             {
                 return this.Redirect("/Users/Login");
             }
 
-            var repoName = repositoriesService.GetNameById(repoId);
-            var model = new CreateCommitViewModel(){Id = repoId, Name = repoName};
+            var models = this.commitsService.GetAll(this.GetUserId());
+            return this.View(models);
+        }
+
+        [HttpGet]
+        public HttpResponse Create(string id)
+        {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
+
+            var repoName = this.repositoriesService.GetNameById(id);
+            var model = new CreateCommitViewModel() { Id = id, Name = repoName };
             return this.View(model);
         }
 
@@ -46,6 +59,23 @@ namespace Git.Controllers
 
             this.commitsService.Create(description, this.GetUserId(), id);
             return this.Redirect("/Repositories/All");
+        }
+
+        [HttpGet]
+        public HttpResponse Delete(string Id)
+        {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
+
+            if (!this.commitsService.IsUserACreator(this.GetUserId(), Id))
+            {
+                return this.Error("You must be owner of the commit to delete it.");
+            }
+
+            this.commitsService.Delete(Id);
+            return this.Redirect("/Commits/All");
         }
     }
 }
